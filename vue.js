@@ -10706,6 +10706,7 @@ function createFunction (code, errors) {
 }
 
 function createCompileToFunctionFn (compile) {
+  console.log('createCompileToFunctionFn compile', compile)
   var cache = Object.create(null);
 
   return function compileToFunctions (
@@ -10713,7 +10714,7 @@ function createCompileToFunctionFn (compile) {
     options,
     vm
   ) {
-    console.log('compileToFunctions', template, options, vm)
+    console.log('compileToFunctions template, options, vm', template, options, vm)
     options = extend({}, options);
     var warn$$1 = options.warn || warn;
     delete options.warn;
@@ -10801,6 +10802,7 @@ function createCompilerCreator (baseCompile) {
       template,
       options
     ) {
+      console.log('createCompiler')
       var finalOptions = Object.create(baseOptions);
       var errors = [];
       var tips = [];
@@ -10854,11 +10856,14 @@ var createCompiler = createCompilerCreator(function baseCompile (
   template,
   options
 ) {
+  console.log('createCompilerCreator template options', template, options)
   var ast = parse(template.trim(), options);
+  console.log('paresd ast:', ast)
   if (options.optimize !== false) {
     optimize(ast, options);
   }
   var code = generate(ast, options);
+  console.log('generated code', code)
   return {
     ast: ast,
     render: code.render,
@@ -10900,6 +10905,7 @@ Vue.prototype.$mount = function (
 ) {
   console.log('Vue.$mount', { el: el });
   el = el && query(el);
+  console.log('$mount el', el);
 
   /* istanbul ignore if */
   if (el === document.body || el === document.documentElement) {
@@ -10910,6 +10916,7 @@ Vue.prototype.$mount = function (
   }
 
   var options = this.$options;
+  console.log('$mount options', options);
   // resolve template/el and convert to render function
   if (!options.render) {
     var template = options.template;
@@ -10934,6 +10941,7 @@ Vue.prototype.$mount = function (
         return this
       }
     } else if (el) {
+      console.log('$mount getOuterHTML')
       template = getOuterHTML(el);
     }
     if (template) {
