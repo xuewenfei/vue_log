@@ -1,0 +1,58 @@
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+<div id="app">
+  <p>
+    <router-link to="/detail/foo">foo</router-link><br>
+    <router-link to="/detail/bar">bar</router-link><br>
+  </p>
+  <router-view></router-view>
+</div>
+<script>
+let VueComponent = Vue.extend({
+  template: `
+    <div>
+      <div>Execute only once '{{name}}', Not initialized again？？？</div>
+      <div>Current route '{{$route.params.name}}'</div>
+    </div>`,
+  data(){
+    return {
+      name: this.$route.params.name
+    };
+  },
+  beforeCreated () {
+    console.log('beforeCreated')
+  },
+  created () {
+    console.log('created')
+  },
+  beforeMounted () {
+    console.log('beforeMounted')
+  },
+  mounted () {
+    console.log('mounted')
+  },
+  beforeUpdated () {
+    console.log('beforeUpdated')
+  },
+  updated () {
+    console.log('updated')
+  },
+  beforeDestroyed () {
+    console.log('beforeDestroyed')
+  },
+  destroyed () {
+    console.log('destroyed')
+  }
+})
+
+const router = new VueRouter({
+  routes: [
+    {
+      path: '/detail/:name', component: VueComponent,
+    }
+  ]
+})
+const app = new Vue({ router }).$mount('#app')
+
+</script>

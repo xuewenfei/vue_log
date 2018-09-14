@@ -1762,6 +1762,7 @@ var callbacks = [];
 var pending = false;
 
 function flushCallbacks () {
+  console.log('flashCallbacks')
   pending = false;
   var copies = callbacks.slice(0);
   callbacks.length = 0;
@@ -1841,6 +1842,7 @@ function withMacroTask (fn) {
 }
 
 function nextTick (cb, ctx) {
+  console.log('nextTick', cb, ctx);
   var _resolve;
   callbacks.push(function () {
     if (cb) {
@@ -2653,8 +2655,8 @@ function initLifecycle (vm) {
 
 function lifecycleMixin (Vue) {
   Vue.prototype._update = function (vnode, hydrating) {
-    console.log('Vue.prototype._update', {vnode: vnode});
     var vm = this;
+     console.log('Vue.prototype._update', {vnode: vnode}, {vm: vm});
     if (vm._isMounted) {
       callHook(vm, 'beforeUpdate');
     }
@@ -4425,12 +4427,14 @@ function _createElement (
     var Ctor;
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag);
     if (config.isReservedTag(tag)) {
+      console.log('tag is platform built-in elements');
       // platform built-in elements
       vnode = new VNode(
         config.parsePlatformTagName(tag), data, children,
         undefined, undefined, context
       );
     } else if (isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
+      console.log('tag is component');
       // component
       vnode = createComponent(Ctor, data, context, children, tag);
     } else {
@@ -5555,6 +5559,8 @@ function createPatchFunction (backend) {
     ownerArray,
     index
   ) {
+    console.log('createElm', {vnode: vnode, insertedVnodeQueue: insertedVnodeQueue, parentElm: parentElm, refElm: refElm, nested: nested, ownerArray: ownerArray,
+      index: index})
     if (isDef(vnode.elm) && isDef(ownerArray)) {
       // This vnode was used in a previous render!
       // now it's used as a new node, overwriting its elm would cause
@@ -5614,6 +5620,7 @@ function createPatchFunction (backend) {
   }
 
   function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
+    console.log('createComponent', {vnode: vnode, insertedVnodeQueue: insertedVnodeQueue, parentElm: parentElm, refElm: refElm})
     var i = vnode.data;
     if (isDef(i)) {
       var isReactivated = isDef(vnode.componentInstance) && i.keepAlive;
@@ -10706,6 +10713,7 @@ function createCompileToFunctionFn (compile) {
     options,
     vm
   ) {
+    console.log('compileToFunctions', template, options, vm)
     options = extend({}, options);
     var warn$$1 = options.warn || warn;
     delete options.warn;
@@ -10738,6 +10746,7 @@ function createCompileToFunctionFn (compile) {
 
     // compile
     var compiled = compile(template, options);
+    console.log('compiled:', compiled)
 
     // check compilation errors/tips
     {
