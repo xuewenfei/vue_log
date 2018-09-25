@@ -2656,7 +2656,8 @@ function initLifecycle (vm) {
 function lifecycleMixin (Vue) {
   Vue.prototype._update = function (vnode, hydrating) {
     var vm = this;
-     console.log('Vue.prototype._update', {vnode: vnode}, {vm: vm});
+    console.log('Vue.prototype._update vnode', vnode);
+    console.log('Vue.prototype._update vm', vm);
     if (vm._isMounted) {
       callHook(vm, 'beforeUpdate');
     }
@@ -2669,6 +2670,7 @@ function lifecycleMixin (Vue) {
     // based on the rendering backend used.
     if (!prevVnode) {
       // initial render
+      console.log('initial render')
       vm.$el = vm.__patch__(
         vm.$el, vnode, hydrating, false /* removeOnly */,
         vm.$options._parentElm,
@@ -2678,6 +2680,7 @@ function lifecycleMixin (Vue) {
       // this prevents keeping a detached DOM tree in memory (#5851)
       vm.$options._parentElm = vm.$options._refElm = null;
     } else {
+      console.log('not initial render')
       // updates
       vm.$el = vm.__patch__(prevVnode, vnode);
     }
@@ -3153,6 +3156,7 @@ Watcher.prototype.get = function get () {
   var value;
   var vm = this.vm;
   try {
+    console.log('this.getter.call(vm, vm)', vm);
     console.log('watch.getter', this.getter);
     value = this.getter.call(vm, vm);
   } catch (e) {
@@ -3967,6 +3971,7 @@ function bindObjectListeners (data, value) {
 /*  */
 
 function installRenderHelpers (target) {
+  console.log('installRenderHelpers (target)', target)
   target._o = markOnce;
   target._n = toNumber;
   target._s = toString;
@@ -4043,6 +4048,7 @@ function FunctionalRenderContext (
   }
 }
 
+console.log('installRenderHelpers(FunctionalRenderContext.prototype)', FunctionalRenderContext.prototype)
 installRenderHelpers(FunctionalRenderContext.prototype);
 
 function createFunctionalComponent (
@@ -4380,7 +4386,7 @@ function _createElement (
   children,
   normalizationType
 ) {
-  console.log('_createElement', {context: context, tag: tag, data: data, children: children});
+  console.log('_createElement', {context: context, tag: tag, data: data, children: children, normalizationType: normalizationType});
   if (isDef(data) && isDef((data).__ob__)) {
     "development" !== 'production' && warn(
       "Avoid using observed data object as vnode data: " + (JSON.stringify(data)) + "\n" +
@@ -4526,6 +4532,7 @@ function initRender (vm) {
 }
 
 function renderMixin (Vue) {
+  console.log('renderMixin')
   // install runtime convenience helpers
   installRenderHelpers(Vue.prototype);
 
@@ -4534,6 +4541,7 @@ function renderMixin (Vue) {
   };
 
   Vue.prototype._render = function () {
+    console.log('Vue.prototype._render')
     var vm = this;
     var ref = vm.$options;
     var render = ref.render;
@@ -5328,6 +5336,7 @@ function query (el) {
 /*  */
 
 function createElement$1 (tagName, vnode) {
+  console.log('createElement$1 (tagName, vnode)', tagName, vnode)
   var elm = document.createElement(tagName);
   if (tagName !== 'select') {
     return elm
@@ -6218,6 +6227,7 @@ function updateDirectives (oldVnode, vnode) {
 }
 
 function _update (oldVnode, vnode) {
+  console.log('_update oldVnode vnode', oldVnode, vnode)
   var isCreate = oldVnode === emptyNode;
   var isDestroy = vnode === emptyNode;
   var oldDirs = normalizeDirectives$1(oldVnode.data.directives, oldVnode.context);
