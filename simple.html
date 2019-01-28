@@ -8,6 +8,10 @@ var app = new Vue({
   el: '#app',
   data: {
     message: 'Hello Vue.js!'
+  },
+  mounted: function() {
+    console.log('life cycle mounted')
   }
 })
+console.log('app.data', app.data)
 </script>

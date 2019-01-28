@@ -1,0 +1,64 @@
+<script src="./vue.js"></script>
+
+<div id="app">
+  <p>{{ message }}</p>
+  <span v-if="undefinedContent" class="content">{{undefinedContent.val}}</span>
+  <br>
+  <span v-if="blankContent" class="content">{{blankContent.val}}</span>
+  <br>
+  <span v-if="objectContent" class="content">{{objectContent.val}}</span>
+  <br>
+  <span v-if="undefinedContent" class="content">!!!{{undefinedContent.val2}}</span>
+  <br>
+  <span v-if="blankContent" class="content">!!!{{blankContent.val2}}</span>
+  <br>
+  <span v-if="objectContent" class="content">!!!{{objectContent.val2}}</span>
+  <br>
+  <span v-if="newContent" class="content">!!!root{{newContent.val2}}</span>
+</div>
+<script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue.js!',
+    undefinedContent: undefined,
+    objectContent: { val: 'xxxx' },
+    blankContent: ''
+  },
+  mounted: function() {
+    console.log('life cycle mounted')
+    var that = this
+    setTimeout(function () {
+      console.log('update in timeout')
+      that.message = '你好'
+      that.blankContent = {
+        val: 'blankContent is ok'
+      }
+      that.undefinedContent = {
+        val: 'undefined Content is ok'
+      }
+      that.objectContent = {
+        val: 'object Content is ok'
+      }
+      that.newContent = {
+        val: 'new Content is ok'
+      }
+      console.log('that', that)
+    }, 5000)
+    setTimeout(function () {
+      that.blankContent.val = 'blankContent is ok!!!!!'
+      that.blankContent.val2 = 'blankContent 2 is ok!!!!!'
+      that.undefinedContent.val = 'undefined Content is ok!!!!!'
+      that.undefinedContent.val2 = 'undefined Content 2 is ok!!!!!'
+      that.objectContent.val = 'object Content is ok!!!!!'
+      that.objectContent.val2 = 'object Content 2 is ok!!!!!'
+    }, 8000)
+  },
+  watcher: {
+    message: function(newVal, oldVal) {
+      console.log('watch message', newVal, oldVal)
+    }
+  }
+})
+console.log('app.data', app.data)
+</script>
