@@ -3,7 +3,19 @@
   <p>deep data</p>
   <p>message: {{ content.message }}</p>
   <p>value: {{ content.value }}</p>
+  <p>defalut deep value: {{ content.defaultDeep.value }}</p>
+  <p v-if="content.otherString">other string: {{ content.otherString.value }}</p>
+  <p v-if="content.other">other: {{ content.other.value }}</p>
+  <p v-if="content.otherObject">other object: {{ content.otherObject.value }}</p>
+  <p v-if="content.deepObject">deep object: {{ content.deepObject.deepValue.value }}</p>
+  <!--p>other content: {{ otherContent }}</p-->
   <button v-on:click="clickMe">Click Me</button>
+  <button v-on:click="addOther">add Other</button>
+  <button v-on:click="printMe">print Me</button>
+  <button v-on:click="changeOtherString">change Other String</button>
+  <button v-on:click="changeOtherObject">change Other Object</button>
+  <button v-on:click="changeDeepObject">change deep Object</button>
+  <button v-on:click="changeDefaultDeep">change default deep</button>
 </div>
 
 <script>
@@ -11,13 +23,49 @@ var app5 = new Vue({
   el: '#app-5',
   data: {
     content: {
+      defaultDeep: {
+        value: 'default deep value'
+      },
       message: 'Hello Vue.js!',
-      value: 1
+      value: 1,
+      otherString: ''
     }
   },
   methods: {
     clickMe: function () {
       this.content.value = this.content.value += 1
+    },
+    printMe: function () {
+      console.log('this', this)
+    },
+    changeDefaultDeep () {
+      this.content.defaultDeep.value = 'defalut deep value 2222'
+    },
+    changeOtherString () {
+      this.content.otherString.value = 'other string value 2222'
+    },
+    changeOtherObject () {
+      this.content.otherObject.value = 'other object value 2222'
+    },
+    changeDeepObject () {
+      this.content.deepObject.deepValue.value = 'deep object value 2222'
+    },
+    addOther: function () {
+      this.content.otherString = {
+        value: 'other string value'
+      }
+      this.content.other = {}
+      this.content.other.value = 'other value'
+      this.content.otherObject = {
+        value: 'other object111'
+      }
+      this.content.deepObject = {
+        deepValue: {
+          value: 'deepVallue111'
+        }
+      }
+      // Property or method "otherContent" is not defined on the instance but referenced during render. Make sure that this property is reactive, either in the data option, or for class-based components, by initializing the property. See: https://vuejs.org/v2/guide/reactivity.html#Declaring-Reactive-Properties.
+      // this.otherContent = 'otherContent'
     }
   }
 })
