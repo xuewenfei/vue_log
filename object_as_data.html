@@ -1,0 +1,76 @@
+
+<script src="./vue.js"></script>
+<div id="app-5">
+  <p>rectangle</p>
+  <p> {{ rect.area }}
+  <p>object as data</p>
+  <p>name: {{ profile.name }}</p>
+  <p>json data</p>
+  <p>other value1: {{ other.value1 }}</p>
+  <p>other value2: {{ other.value2 }}</p>
+  <p v-if="other.value2">if other value2: {{ other.value2 }}</p>
+  <button v-on:click="printLog">print Log</button>
+  <br>
+  <button v-on:click="clickMe2">Add attri</button>
+  <br>
+  <button v-on:click="changeRectangle">change Rect</button>
+</div>
+
+<script>
+  class Rectangle {
+    constructor(height, width) {
+      this.height = height;
+      this.width = width;
+    }
+    // Getter
+    get area() {
+      return this.calcArea();
+    }
+    // Method
+    calcArea() {
+      return this.height * this.width;
+    }
+    setHeight (height) {
+      this.height = height
+    }
+  }
+  class Address {
+    constructor () {
+      this.addr1Field = "山西"
+      this.addr2 = "上海"
+    }
+  }
+  class Profile {
+    contructor () {
+      this.name = "薛大爷"
+      this.addr = new Address()
+    }
+  }
+var profile = new Profile()
+var app5 = new Vue({
+  el: '#app-5',
+  data() {
+    return {
+      profile: profile,
+      other: {
+        value1: "other value1"
+      },
+      rect: new Rectangle(4, 5)
+    }
+  },
+  methods: {
+    printLog: function () {
+      console.log('this', this)
+      console.log('profile', this.profile)
+      console.log('other', this.other)
+      console.log('rect', this.rect)
+    },
+    clickMe2: function () {
+      this.other.value2 = "hhhhhh"
+    },
+    changeRectangle: function () {
+      this.rect.setHeight(2)
+    }
+  }
+})
+</script>

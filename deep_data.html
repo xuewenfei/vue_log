@@ -1,0 +1,24 @@
+<script src="./vue.js"></script>
+<div id="app-5">
+  <p>deep data</p>
+  <p>message: {{ content.message }}</p>
+  <p>value: {{ content.value }}</p>
+  <button v-on:click="clickMe">Click Me</button>
+</div>
+
+<script>
+var app5 = new Vue({
+  el: '#app-5',
+  data: {
+    content: {
+      message: 'Hello Vue.js!',
+      value: 1
+    }
+  },
+  methods: {
+    clickMe: function () {
+      this.content.value = this.content.value += 1
+    }
+  }
+})
+</script>

@@ -460,7 +460,6 @@ function isReserved (str) {
  * Define a property.
  */
 function def (obj, key, val, enumerable) {
-  console.log('def');
   Object.defineProperty(obj, key, {
     value: val,
     enumerable: !!enumerable,
@@ -2567,6 +2566,7 @@ function resolveSlots (
   children,
   context
 ) {
+  console.log('resolveSlots', { children, context })
   var slots = {};
   if (!children) {
     return slots
@@ -4213,6 +4213,7 @@ function createComponent (
   children,
   tag
 ) {
+  console.log('=>createComponent', {Ctor, data, context, children, tag});
   if (isUndef(Ctor)) {
     return
   }
@@ -4500,6 +4501,7 @@ function registerDeepBindings (data) {
 /*  */
 
 function initRender (vm) {
+  console.log('initRender vm', vm)
   vm._vnode = null; // the root of the child tree
   vm._staticTrees = null; // v-once cached trees
   var options = vm.$options;
@@ -5629,7 +5631,6 @@ function createPatchFunction (backend) {
   }
 
   function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
-    console.log('createComponent', {vnode: vnode, insertedVnodeQueue: insertedVnodeQueue, parentElm: parentElm, refElm: refElm})
     var i = vnode.data;
     if (isDef(i)) {
       var isReactivated = isDef(vnode.componentInstance) && i.keepAlive;
@@ -5641,6 +5642,7 @@ function createPatchFunction (backend) {
       // component also has set the placeholder vnode's elm.
       // in that case we can just return the element and be done.
       if (isDef(vnode.componentInstance)) {
+        console.log('createComponent', {vnode: vnode, insertedVnodeQueue: insertedVnodeQueue, parentElm: parentElm, refElm: refElm})
         initComponent(vnode, insertedVnodeQueue);
         if (isTrue(isReactivated)) {
           reactivateComponent(vnode, insertedVnodeQueue, parentElm, refElm);
