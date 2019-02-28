@@ -5925,7 +5925,7 @@ function createPatchFunction (backend) {
     if (oldVnode === vnode) {
       return
     }
-
+    console.log('patchVnode', { oldVnode, vnode, insertedVnodeQueue, removeOnly })
     var elm = vnode.elm = oldVnode.elm;
 
     if (isTrue(oldVnode.isAsyncPlaceholder)) {
