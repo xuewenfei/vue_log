@@ -1,0 +1,39 @@
+<script src="./vue.js"></script>
+<div id="app-4">
+  <ol>
+    <li v-for="todo in todos">
+      {{ todo.text }}
+    </li>
+  </ol>
+  <button @click="updateItemProp">更新元素属性</button>
+  <button @click="updateItem">更新元素</button>
+  <button @click="addItem">添加元素</button>
+</div>
+
+<script>
+var app = new Vue({
+  el: '#app-4',
+  data: {
+    todos: [
+      { text: 'Learn JavaScript' },
+      { text: 'Learn Vue' },
+      { text: 'Build something awesome' }
+    ]
+  },
+  methods: {
+    addItem() {
+      this.todos.push({text: '成功了'})
+    },
+    updateItem() {
+      this.todos[1] = { text: '成功了' }
+    },
+    updateItemProp() {
+      this.todos[1].text = '成功了'
+    },
+    resetData() {
+
+    }
+  }
+})
+console.log('app.data', app.data)
+</script>

@@ -1,0 +1,51 @@
+<script src="./vue.js"></script>
+<div id="app-4">
+  <ol>
+    <li v-for="todo in todos">
+      {{ todo.text }}
+    </li>
+  </ol>
+  <div>计算属性1：{{middle1.text}}</div>
+  <div>计算属性2：{{middle2.text}}</div>
+  <button @click="updateItemProp">更新原始数据</button>
+  <button @click="updateComputed">更新计算属性1</button>
+  <button @click="resetData">重置数据</button>
+</div>
+
+<script>
+  function initialState (){
+    return {
+      todos: [
+        { text: 'Learn JavaScript' },
+        { text: 'Learn Vue' },
+        { text: 'Build something awesome' }
+      ]
+    }
+  }
+var app = new Vue({
+  el: '#app-4',
+  data() {
+    return initialState()
+  },
+  computed: {
+    middle1() {
+      return this.todos[1]
+    },
+    middle2() {
+      return this.todos[1]
+    }
+  },
+  methods: {
+    updateItemProp() {
+      this.todos[1].text = '成功了'
+    },
+    updateComputed() {
+      this.middle1.text = '成功了'
+    },
+    resetData() {
+      Object.assign(this.$data, initialState());
+    }
+  }
+})
+console.log('app.data', app.data)
+</script>

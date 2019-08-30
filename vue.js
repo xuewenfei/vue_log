@@ -2784,6 +2784,7 @@ function mountComponent (
   /* istanbul ignore if */
   if ("development" !== 'production' && config.performance && mark) {
     updateComponent = function () {
+      console.log('开发环境 updateComponent')
       var name = vm._name;
       var id = vm._uid;
       var startTag = "vue-perf-start:" + id;
@@ -2801,6 +2802,7 @@ function mountComponent (
     };
   } else {
     updateComponent = function () {
+      console.log('生产环境 updateComponent')
       vm._update(vm._render(), hydrating);
     };
   }
@@ -2830,6 +2832,7 @@ function updateChildComponent (
   {
     isUpdatingChildComponent = true;
   }
+  console.log('updateChildComponent')
 
   // determine whether component has slot children
   // we need to do this before overwriting $options._renderChildren
@@ -4160,6 +4163,7 @@ var componentVNodeHooks = {
   },
 
   prepatch: function prepatch (oldVnode, vnode) {
+    console.log('prepatch', {oldVnode, vnode})
     var options = vnode.componentOptions;
     var child = vnode.componentInstance = oldVnode.componentInstance;
     updateChildComponent(

@@ -22,20 +22,20 @@ Vue.component('button-counter', {
     console.log('this.$props', this.$props)
     console.log('button-counter mounted')
   },
-  template: '<button @click="count++">You clicked me {{ count }} parentCount: {{myProp}} {{myprop}}times.</button>'
+  template: '<button @click="count++">我是子组件,子组件点击 {{ count }} 父组件点击: {{myProp}} {{myprop}}次数.</button>'
 })
 </script>
 <div id="components-demo">
   <button-counter :my-prop="parentCount" :myProp="parentCount + 1"></button-counter>
   <br>
-  <button @click="parentCount++">You clicked me {{ parentCount }} times.</button>
+  <button @click="parentCount++">父组件点击 {{ parentCount }} 次数.</button>
 </div>
 <script>
 var app = new Vue({
   el: '#components-demo',
   data: function () {
     return {
-      parentCount: 1
+      parentCount: 0
     }
   },
   created () {
