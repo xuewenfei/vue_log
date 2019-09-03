@@ -1,0 +1,105 @@
+<script src="./vue.js"></script>
+<script src="./vue-router.js"></script>
+
+<div id="app">
+  <p>
+    <router-link to="/detail/foo">foo</router-link><br>
+    <router-link to="/detail/bar">bar</router-link><br>
+    <router-link to="/2detail/foo">foo2</router-link><br>
+    <router-link to="/2detail/bar">bar2</router-link><br>
+  </p>
+  <router-view></router-view>
+</div>
+<script>
+//Vue.config.productionTip = false
+let VueComponent = Vue.extend({
+  template: `
+  <div>
+    <div>
+      <div>Execute only once '{{name}}', Not initialized again？？？</div>
+      <div>Current route '{{$route.params.name}}'</div>
+    </div>
+  </div>`,
+  data(){
+    return {
+      name: this.$route.params.name
+    };
+  },
+  beforeCreated () {
+    console.log('1 beforeCreated')
+  },
+  created () {
+    console.log('1 created')
+  },
+  beforeMounted () {
+    console.log('1 beforeMounted')
+  },
+  mounted () {
+    console.log('1 mounted')
+  },
+  beforeUpdated () {
+    console.log('1 beforeUpdated')
+  },
+  updated () {
+    console.log('1 updated')
+  },
+  beforeDestroyed () {
+    console.log('1 beforeDestroyed')
+  },
+  destroyed () {
+    console.log('1 destroyed')
+  }
+});
+
+let VueComponent2 = Vue.extend({
+  template: `
+  <div>
+    <div>
+      <div>Execute only once '{{name}}', Not initialized again？？？</div>
+      <div>Current route '{{$route.params.name}}'</div>
+    </div>
+  </div>
+  `,
+  data(){
+    return {
+      name: this.$route.params.name
+    };
+  },
+  beforeCreated () {
+    console.log('2 beforeCreated')
+  },
+  created () {
+    console.log('2 created')
+  },
+  beforeMounted () {
+    console.log('2 beforeMounted')
+  },
+  mounted () {
+    console.log('2 mounted')
+  },
+  beforeUpdated () {
+    console.log('2 beforeUpdated')
+  },
+  updated () {
+    console.log('2 updated')
+  },
+  beforeDestroyed () {
+    console.log('2 beforeDestroyed')
+  },
+  destroyed () {
+    console.log('2 destroyed')
+  }
+});
+const router = new VueRouter({
+  routes: [
+    {
+      path: '/detail/:name', component: VueComponent,
+    },
+    {
+      path: '/2detail/:name', component: VueComponent2,
+    }
+  ]
+})
+const app = new Vue({ router }).$mount('#app')
+
+</script>
