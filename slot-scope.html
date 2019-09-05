@@ -1,0 +1,31 @@
+<script src="./vue.js"></script>
+
+<div id="app">
+</div>
+<script>
+let Child = {
+  template: '<div class="child">' +
+  '<slot text="Hello " :msg="msg"></slot>' +
+  '</div>',
+  data() {
+    return {
+      msg: 'Vue'
+    }
+  }
+}
+
+let vm = new Vue({
+  el: '#app',
+  template: '<div>' +
+  '<child>' +
+  '<template slot-scope="props">' +
+  '<p>Hello from parent</p>' +
+  '<p>{{ props.text + props.msg}}</p>' +
+  '</template>' +
+  '</child>' +
+  '</div>',
+  components: {
+    Child
+  }
+})
+</script>

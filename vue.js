@@ -3771,6 +3771,7 @@ function renderSlot (
     }
     nodes = scopedSlotFn(props) || fallback;
   } else {
+    console.log('renderSlot', {name, fallback, props, bindObject})
     var slotNodes = this.$slots[name];
     // warn duplicate slot usage
     if (slotNodes) {
@@ -4512,6 +4513,7 @@ function initRender (vm) {
   var parentVnode = vm.$vnode = options._parentVnode; // the placeholder node in parent tree
   var renderContext = parentVnode && parentVnode.context;
   vm.$slots = resolveSlots(options._renderChildren, renderContext);
+  console.log('vm.$slots after resolveSlots', vm.$slots)
   vm.$scopedSlots = emptyObject;
   // bind the createElement fn to this instance
   // so that we get proper render context inside it.
