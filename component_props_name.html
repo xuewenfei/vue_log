@@ -1,0 +1,89 @@
+<script src="./vue.js"></script>
+<script>
+Vue.component('simple-comp', {
+  props: ['parentcount', 'parentCount'],
+  data: function () {
+    return {
+      count: 0
+    }
+  },
+  watch: {
+    parentcount: {
+      handler (newVal, oldVal) {
+        console.log('watch parentcount', newVal, oldVal)
+      },
+      immediate: true
+    },
+    parentCount: {
+      handler (newVal, oldVal) {
+        console.log('watch parentCount', newVal, oldVal)
+      },
+      immediate: true
+    },
+  },
+  created () {
+    console.log('button-counter created')
+  },
+  mounted () {
+    console.log('this.$props', this.$props)
+  },
+  methods: {
+    emit1() {
+      this.$emit('eventEmit')
+    },
+    emit2() {
+      this.$emit('event-emit')
+    },
+    emit3() {
+      this.$emit('eventemit')
+    },
+  },
+  template: `<div><button @click="emit3">eventemit</button><button @click="emit1">eventEmit</button><button @click="emit2">event-emit</button><div>简单数据 parentcount:{{parentcount}}</div><div @click="emit2">简单数据 parentCount:{{parentCount}}</div></div>`
+})
+</script>
+
+<div id="components-demo">
+  <simple-comp
+    @eventEmit="eventEmit1"
+    @event-emit="eventEmit2"
+    @eventemit="eventEmit3"
+    :parent-count="parentCount1"
+    :parentCount="parentCount2"></simple-comp>
+  <br>
+  <button @click="updateSimple1">更新驼峰. parent-count</button>
+  <button @click="updateSimple2">更新中划线. parentCount</button>
+</div>
+<script>
+var app = new Vue({
+  el: '#components-demo',
+  data: function () {
+    return {
+      parentCount1: 11,
+      parentCount2: 22
+    }
+  },
+  created () {
+    console.log('app created')
+  },
+  mounted () {
+    console.log('app mounted')
+  },
+  methods: {
+    eventEmit1() {
+      console.log('eventEmit1 get eventEmit')
+    },
+    eventEmit2() {
+      console.log('eventEmit2 get event-emit')
+    },
+    eventEmit3() {
+      console.log('eventEmit3 get eventemit')
+    },
+    updateSimple1() {
+      this.parentCount1 += 1
+    },
+    updateSimple2() {
+      this.parentCount2 += 1
+    },
+  }
+})
+</script>

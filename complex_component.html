@@ -1,0 +1,72 @@
+<script src="./vue.js"></script>
+<script>
+Vue.component('simple-comp', {
+  props: ['bigData', 'parentCount'],
+  data: function () {
+    return {
+      count: 0
+    }
+  },
+  watch: {
+    parentCount: {
+      handler (newVal, oldVal) {
+        console.log('watch parentCount', newVal, oldVal)
+      },
+      immediate: true
+    },
+    bigData: {
+      handler (newVal, oldVal) {
+        console.log('watch bigData', newVal, oldVal)
+      },
+      immediate: true
+    }
+  },
+  created () {
+    console.log('button-counter created')
+  },
+  mounted () {
+    console.log('this.$props', this.$props)
+    console.log('button-counter mounted')
+  },
+  template: `<div> <div v-if="bigData && bigData.t">奇迹在这里，bigData.t:{{ bigData.t }}</div><div v-if="bigData">奇迹在这里，bigData.a:{{ bigData.a }}</div><div>简单数据:{{parentCount}}</div></div>`
+})
+</script>
+
+<div id="components-demo">
+  <simple-comp :big-data="bigData" :parent-count="parentCount"></simple-comp>
+  <br>
+  <button @click="updateBigData">update Big Data.</button>
+  <button @click="addBigData">addData Big Data.</button>
+  <button @click="updateSimple">update simple.</button>
+</div>
+<script>
+var app = new Vue({
+  el: '#components-demo',
+  data: function () {
+    return {
+      bigData: {
+        a: 'a',
+        b: 'b'
+      },
+      parentCount: 1
+    }
+  },
+  created () {
+    console.log('app created')
+  },
+  mounted () {
+    console.log('app mounted')
+  },
+  methods: {
+    updateBigData() {
+      this.bigData.a = 'a111'
+    },
+    addBigData() {
+      this.bigData.t = 'ttt'
+    },
+    updateSimple() {
+      this.parentCount += 1
+    }
+  }
+})
+</script>
